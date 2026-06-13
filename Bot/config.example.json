@@ -1,0 +1,36 @@
+{
+  "url": "https://example.com/your-form-page",
+  "interval_minutes": 10,
+  "headless": true,
+  "wait_seconds": 15,
+  "fields": [
+    {
+      "by": "id",
+      "selector": "username",
+      "value": "your_username",
+      "type": "text"
+    },
+    {
+      "by": "id",
+      "selector": "email",
+      "value": "you@example.com",
+      "type": "text"
+    },
+    {
+      "by": "name",
+      "selector": "country",
+      "value": "US",
+      "type": "select"
+    },
+    {
+      "by": "id",
+      "selector": "agree",
+      "value": true,
+      "type": "checkbox"
+    }
+  ],
+  "submit": {
+    "by": "css",
+    "selector": "button[type='submit']"
+  }
+}

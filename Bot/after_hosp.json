@@ -1,0 +1,20 @@
+[
+  {
+    "id": "",
+    "name": null,
+    "ph": "",
+    "tag": "DIV",
+    "type": "",
+    "val": "",
+    "visible": true
+  },
+  {
+    "id": "el-id-6923-34",
+    "name": "",
+    "ph": "Выберите",
+    "tag": "INPUT",
+    "type": "text",
+    "val": "",
+    "visible": true
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "buttons": [
+    {
+      "cls": "el-button el-button--danger",
+      "text": "Отклонить"
+    },
+    {
+      "cls": "el-button el-button--success el-tooltip__trigger",
+      "text": "Госпитализировать у себя"
+    },
+    {
+      "cls": "dtsj-acc__header",
+      "text": "Бюджет одобренТекущая 01.06.2026, 09:00Одобрено91 227 273сум"
+    },
+    {
+      "cls": "dtsj-acc__header",
+      "text": "Бюджет отклонён#3 26.05.2026, 10:59 · Budjeti yetarli emas"
+    },
+    {
+      "cls": "dtsj-acc__header",
+      "text": "Бюджет отклонён#2 19.05.2026, 14:23 · Budjeti yetarli emas"
+    },
+    {
+      "cls": "dtsj-acc__header",
+      "text": "Бюджет отклонён#1 14.05.2026, 14:00 · Budjeti yetarli emas"
+    }
+  ],
+  "inputs": [],
+  "labels": []
+}

@@ -1,0 +1,59 @@
+<html lang="ru"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="lnMpxmeLgt9fSefMyaj62s6gtGBflA4GrAaE8XXC">
+
+    <title>sso_service</title>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="/css/app.css" rel="stylesheet">
+<style type="text/css">
+.action-link[data-v-1552a5b6] {
+    cursor: pointer;
+}
+</style><style type="text/css">
+.action-link[data-v-397d14ca] {
+    cursor: pointer;
+}
+</style><style type="text/css">
+.action-link[data-v-49962cc0] {
+    cursor: pointer;
+}
+</style></head>
+<body>
+<div id="app"><div class="login__page"><div class="login__header"><div class="login__header_left"><a href="https://sso.ssv.uz"><img src="https://sso.ssv.uz/./logo.svg" alt="" class="login__header_left_logo"></a> <div class="login__header_left_text"><span>sso.ssv.uz</span> <span>Управление системами Министерства Здравохранения</span></div></div> <div class="login__header_right"><ul class="navbar-nav ml-3"></ul></div></div> <form method="POST" action="https://sso.ssv.uz/login" id="login__card"><input type="hidden" name="_token" value="lnMpxmeLgt9fSefMyaj62s6gtGBflA4GrAaE8XXC"> <div class="login__card"><span class="login__card_title mb-4">Вход</span> <div class="login__card_input"><input id="username" type="text" placeholder="Логин" name="username" value="" required="required" autofocus="autofocus" class="form-control "> <img src="https://sso.ssv.uz/icons/profile-2user.svg" alt="" placeholder="Введите свой логин"></div> <div class="login__card_input"><input id="login__password" type="password" placeholder="Пароль" name="password" required="required" class="form-control "> <img src="https://sso.ssv.uz/icons/password-lock.svg" alt=""> <img src="https://sso.ssv.uz/icons/visible.svg" alt="" onclick="togglePasswordVisiblity()" id="login__password_visible" class="login__card_input_visible"></div> <div class="login__card_remember"><div class="d-flex align-center"><input type="checkbox" id="checkbox_remember_me" class="login__card_checkbox"> <label for="checkbox_remember_me"><span class="cursor-pointer">Запомнить меня</span></label></div> <div>Забыли пароль?</div></div> <button type="submit" class="login__card_btn">Авторизоваться</button></div></form> <div class="login__footer"></div></div></div>
+
+<!-- Scripts -->
+<script src="https://sso.ssv.uz/js/app.js" defer=""></script>
+<script>
+    function setLocale(event){
+        location.replace('https://sso.ssv.uz/locale/' + event.target.value)
+    }
+
+
+</script>
+
+<script>
+let state = false
+function togglePasswordVisiblity(){
+    if(state){
+        document.getElementById('login__password').setAttribute('type', 'password');
+        document.getElementById('login__password_visible').style.color='#7a797e';
+        state = false;
+    }else{
+        document.getElementById('login__password').setAttribute('type', 'text');
+        document.getElementById('login__password_visible').style.color='#5887ef';
+        state = true;
+    }
+}
+</script>
+
+
+
+</body></html>
