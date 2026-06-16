@@ -12,6 +12,7 @@ Budget button clicks happen at **exact seconds**:
 | **09:00:03** | Click Запросить бюджет (patient 2, +3 sec) |
 | **09:30:00** | Next slot |
 | **10:00:00** | Every 30 minutes… |
+| **18:30:00** | Last slot of the day |
 
 **Prep starts 55 seconds before** each slot (e.g. 08:59:05 for 09:00:00) so steps 1–4 finish before the exact click.
 
@@ -20,6 +21,7 @@ Budget button clicks happen at **exact seconds**:
 ```json
 "schedule": {
   "start_time": "09:00:00",
+  "end_time": "18:30:00",
   "interval_minutes": 30,
   "prep_seconds": 55,
   "patient_stagger_seconds": 3
@@ -29,7 +31,8 @@ Budget button clicks happen at **exact seconds**:
 | Key | Meaning |
 |-----|---------|
 | `start_time` | First daily slot (HH:MM:SS) |
-| `interval_minutes` | 30 = 09:00, 09:30, 10:00… |
+| `end_time` | Last daily slot (HH:MM:SS) |
+| `interval_minutes` | 30 = 09:00, 09:30, 10:00… through 18:30 |
 | `prep_seconds` | Start job this many seconds before click (default 55) |
 | `patient_stagger_seconds` | Gap between patients (3 sec) |
 

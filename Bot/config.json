@@ -5,6 +5,7 @@
   "pinfl_wait_seconds": 5,
   "schedule": {
     "start_time": "09:00:00",
+    "end_time": "18:30:00",
     "interval_minutes": 30,
     "prep_seconds": 55,
     "patient_stagger_seconds": 3
@@ -17,18 +18,16 @@
   "budget_reason": "Budjeti yetarli emas",
   "patients": [
     {
-      "last_name": "САРАБЕКОВА",
-      "first_name": "АЙДИН",
-      "pinfl": "42512463790014",
-      "birth_date": "25.12.1946",
-      "order_url": "https://mis2.ssv.uz/orders/1577222"
-    },
-    {
       "last_name": "НЕГМАТОВА",
       "first_name": "ХУРШЕДА",
       "pinfl": "41802526180016",
       "birth_date": "18.02.1952",
       "order_url": "https://mis2.ssv.uz/orders/1617371"
+    },
+    {
+      "last_name": "САДРИДДИНОВА",
+      "first_name": "ГУЛШОД",
+      "birth_date": "15.09.1964"
     }
   ]
 }

@@ -88,22 +88,40 @@ def next_budget_slot(
     start_m: int,
     start_s: int,
     interval_minutes: int,
+    end_h: int | None = None,
+    end_m: int | None = None,
+    end_s: int | None = None,
 ) -> datetime:
-    """Next slot at start_time + N * interval (e.g. 09:00:00, 09:30:00, 10:00:00)."""
-    anchor = now.replace(hour=start_h, minute=start_m, second=start_s, microsecond=0)
+    """Next slot at start_time + N * interval, within the daily end_time window."""
     interval_sec = interval_minutes * 60
+    start = now.replace(hour=start_h, minute=start_m, second=start_s, microsecond=0)
+    end = (
+        now.replace(hour=end_h, minute=end_m, second=end_s, microsecond=0)
+        if end_h is not None
+        else None
+    )
 
-    if now <= anchor:
-        return anchor
+    if end is not None and now > end:
+        tomorrow = now + timedelta(days=1)
+        return tomorrow.replace(hour=start_h, minute=start_m, second=start_s, microsecond=0)
 
-    elapsed = (now - anchor).total_seconds()
+    if now <= start:
+        return start
+
+    elapsed = (now - start).total_seconds()
     step = int(elapsed // interval_sec)
-    current_slot = anchor + timedelta(seconds=step * interval_sec)
+    candidate = start + timedelta(seconds=step * interval_sec)
 
-    if now <= current_slot:
-        return current_slot
+    if now <= candidate:
+        slot = candidate
+    else:
+        slot = candidate + timedelta(seconds=interval_sec)
 
-    return current_slot + timedelta(seconds=interval_sec)
+    if end is not None and slot > end:
+        tomorrow = now + timedelta(days=1)
+        return tomorrow.replace(hour=start_h, minute=start_m, second=start_s, microsecond=0)
+
+    return slot
 
 
 def wait_until_precise(target: datetime) -> None:
@@ -123,10 +141,17 @@ def load_schedule_config(cfg: dict) -> dict:
     sched = cfg.get("schedule", {})
     start_time = sched.get("start_time", cfg.get("start_time", "09:00:00"))
     h, m, s = parse_clock_time(start_time)
+    end_h, end_m, end_s = None, None, None
+    end_time = sched.get("end_time")
+    if end_time:
+        end_h, end_m, end_s = parse_clock_time(end_time)
     return {
         "start_h": h,
         "start_m": m,
         "start_s": s,
+        "end_h": end_h,
+        "end_m": end_m,
+        "end_s": end_s,
         "interval_minutes": int(sched.get("interval_minutes", cfg.get("interval_minutes", 30))),
         "prep_seconds": int(sched.get("prep_seconds", 55)),
         "patient_stagger_seconds": int(sched.get("patient_stagger_seconds", 3)),
@@ -532,10 +557,15 @@ def main() -> None:
     config = load_config()
     sched = load_schedule_config(config)
     anchor = f"{sched['start_h']:02d}:{sched['start_m']:02d}:{sched['start_s']:02d}"
+    if sched["end_h"] is not None:
+        end_anchor = f"{sched['end_h']:02d}:{sched['end_m']:02d}:{sched['end_s']:02d}"
+        window = f"{anchor} to {end_anchor}"
+    else:
+        window = f"{anchor} onwards"
 
     log.info(
-        "MIS2 bot started - budget clicks at %s then every %s min (:00 and :30)",
-        anchor,
+        "MIS2 bot started - budget clicks %s every %s min (exact :00 and :30)",
+        window,
         sched["interval_minutes"],
     )
     log.info("Prep starts %s seconds before each click (steps 1-4)", sched["prep_seconds"])
@@ -554,6 +584,9 @@ def main() -> None:
             sched["start_m"],
             sched["start_s"],
             sched["interval_minutes"],
+            sched["end_h"],
+            sched["end_m"],
+            sched["end_s"],
         )
         # Enough time for each patient: prep + stagger between budget clicks
         total_prep = prep_each * patient_count + stagger * max(0, patient_count - 1)
@@ -584,6 +617,9 @@ def main() -> None:
             sched["start_m"],
             sched["start_s"],
             sched["interval_minutes"],
+            sched["end_h"],
+            sched["end_m"],
+            sched["end_s"],
         )
         next_total_prep = prep_each * patient_count + stagger * max(0, patient_count - 1)
         next_prep = next_slot - timedelta(seconds=next_total_prep)
