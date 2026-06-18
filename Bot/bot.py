@@ -564,7 +564,7 @@ def main() -> None:
         window = f"{anchor} onwards"
 
     log.info(
-        "MIS2 bot started - budget clicks %s every %s min (exact :00 and :30)",
+        "MIS2 bot started - budget clicks %s every %s min (exact schedule)",
         window,
         sched["interval_minutes"],
     )
