@@ -175,6 +175,110 @@ def is_org_page(driver: webdriver.Chrome) -> bool:
     return "select-organization" in driver.current_url
 
 
+def is_oauth_authorize_page(driver: webdriver.Chrome) -> bool:
+    url = driver.current_url.lower()
+    if "oauth" in url and "authorize" in url:
+        return True
+    try:
+        src = driver.page_source.lower()
+    except WebDriverException:
+        return False
+    markers = (
+        "authorization request",
+        "requesting permission to access your account",
+        "authorized to access",
+        "mis2.ssv.uz is requesting",
+    )
+    return any(marker in src for marker in markers)
+
+
+def _radio_container_text(radio) -> str:
+    for xpath in (
+        "./ancestor::label[1]",
+        "./parent::*",
+        "./ancestor::div[1]",
+        "./ancestor::li[1]",
+        "./ancestor::tr[1]",
+    ):
+        try:
+            container = radio.find_element(By.XPATH, xpath)
+            text = (container.text or "").strip()
+            if text:
+                return text
+        except Exception:
+            continue
+    return ""
+
+
+def handle_oauth_authorization(driver: webdriver.Chrome, wait: WebDriverWait, org_name: str) -> None:
+    """SSO consent screen: pick organization and click Authorize."""
+    if not is_oauth_authorize_page(driver):
+        return
+
+    log.info("OAuth authorization page detected")
+    org_key = org_name.strip().lower()
+    selected = False
+
+    radios = driver.find_elements(By.CSS_SELECTOR, "input[type='radio']")
+    for radio in radios:
+        text = _radio_container_text(radio).lower()
+        if org_key and org_key in text:
+            js_click(driver, radio)
+            selected = True
+            log.info("OAuth: selected organization: %s", org_name)
+            break
+
+    if not selected and len(radios) >= 2:
+        js_click(driver, radios[1])
+        selected = True
+        log.info("OAuth: selected second organization option (fallback)")
+
+    if not selected and radios:
+        js_click(driver, radios[0])
+        selected = True
+        log.warning("OAuth: selected first organization option (fallback)")
+
+    if not selected:
+        raise RuntimeError(f"OAuth authorize: organization not found: {org_name}")
+
+    time.sleep(0.5)
+
+    authorize_btn = None
+    for btn in driver.find_elements(By.CSS_SELECTOR, "button, input[type='submit'], a"):
+        text = (btn.text or btn.get_attribute("value") or "").strip().lower()
+        if not text:
+            continue
+        if any(word in text for word in ("cancel", "отмен", "deny", "отказ")):
+            continue
+        if "authoriz" in text or "разреш" in text or text in ("ok", "да", "yes"):
+            authorize_btn = btn
+            break
+
+    if authorize_btn is None:
+        for btn in driver.find_elements(By.CSS_SELECTOR, "button.btn-success, button[type='submit']"):
+            text = (btn.text or btn.get_attribute("value") or "").strip().lower()
+            if text and "cancel" not in text and "отмен" not in text:
+                authorize_btn = btn
+                break
+
+    if authorize_btn is None:
+        raise RuntimeError("OAuth authorize: Authorize button not found")
+
+    js_click(driver, authorize_btn)
+    log.info("OAuth: clicked Authorize")
+    time.sleep(3)
+
+
+def handle_oauth_authorization_if_present(
+    driver: webdriver.Chrome, wait: WebDriverWait, org_name: str
+) -> None:
+    try:
+        WebDriverWait(driver, 8).until(lambda d: is_oauth_authorize_page(d))
+    except TimeoutException:
+        return
+    handle_oauth_authorization(driver, wait, org_name)
+
+
 def js_click(driver: webdriver.Chrome, element) -> None:
     driver.execute_script("arguments[0].scrollIntoView({block:'center'});", element)
     time.sleep(0.3)
@@ -196,7 +300,9 @@ def login_sso(driver: webdriver.Chrome, wait: WebDriverWait, cfg: dict) -> None:
     pw.clear()
     pw.send_keys(login_cfg["password"])
     driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
-    time.sleep(3)
+    time.sleep(2)
+    handle_oauth_authorization_if_present(driver, wait, cfg.get("organization", ""))
+    time.sleep(2)
     log.info("SSO login submitted")
 
 
@@ -221,6 +327,8 @@ def ensure_session(driver: webdriver.Chrome, wait: WebDriverWait, cfg: dict) -> 
     time.sleep(2)
     if is_login_page(driver):
         login_sso(driver, wait, cfg)
+    else:
+        handle_oauth_authorization_if_present(driver, wait, cfg.get("organization", ""))
     if is_org_page(driver):
         select_organization(driver, wait, cfg["organization"])
     time.sleep(2)

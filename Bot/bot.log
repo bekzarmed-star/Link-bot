@@ -770,3 +770,68 @@ Stacktrace:
 2026-06-04 10:23:49,368 [INFO] Done: НЕГМАТОВА ХУРШЕДА
 2026-06-04 10:23:49,369 [INFO] Job finished.
 2026-06-04 10:25:31,655 [INFO] Stopped by user.
+2026-06-29 11:44:50,891 [INFO] MIS2 bot started - budget clicks 09:00:00 to 18:30:00 every 10 min (exact schedule)
+2026-06-29 11:44:50,891 [INFO] Prep starts 55 seconds before each click (steps 1-4)
+2026-06-29 11:44:50,891 [INFO] Press Ctrl+C to stop.
+2026-06-29 11:44:50,891 [INFO] Next budget click: 11:50:00.000 | prep starts: 11:47:09.000 | waiting 138s (3 patients)
+2026-06-29 11:47:09,006 [INFO] === Job started at 11:47:09.006 ===
+2026-06-29 11:47:09,006 [INFO] === Budget slot: 11:50:00.000 ===
+2026-06-29 11:47:09,006 [INFO] ====== WebDriver manager ======
+2026-06-29 11:47:09,956 [INFO] Get LATEST chromedriver version for google-chrome
+2026-06-29 11:47:13,676 [INFO] There is no [win64] chromedriver "149.0.7827.155" for browser google-chrome "149.0.7827" in cache
+2026-06-29 11:47:13,996 [INFO] There is no [win64] chromedriver "149.0.7827.155" for browser google-chrome "149.0.7827" in cache
+2026-06-29 11:47:13,996 [INFO] Get LATEST chromedriver version for google-chrome
+2026-06-29 11:47:28,544 [INFO] WebDriver version 149.0.7827.155 selected
+2026-06-29 11:47:28,554 [INFO] Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/149.0.7827.155/win64/chromedriver-win64.zip
+2026-06-29 11:47:28,554 [INFO] About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/149.0.7827.155/win64/chromedriver-win64.zip
+2026-06-29 11:47:29,154 [INFO] Driver downloading response is 200
+2026-06-29 11:47:30,784 [INFO] Driver has been saved in cache [C:\Users\Zarmed IT\.wdm\drivers\chromedriver\win64\149.0.7827.155]
+2026-06-29 11:47:38,524 [INFO] SSO login submitted
+2026-06-29 11:47:39,695 [INFO] Organization selected: Zarmed Pratiksha Hospital Grup
+2026-06-29 11:47:43,756 [INFO] Organization saved
+2026-06-29 11:47:45,762 [INFO] --- Processing САДРИДДИНОВА ГУЛШОД (DOB 15.09.1964) ---
+2026-06-29 11:47:45,763 [INFO] Target budget click: 11:50:00.000
+2026-06-29 11:47:46,361 [INFO] Step 1: opened Направления
+2026-06-29 11:47:48,816 [INFO] Cleared filters
+2026-06-29 11:47:51,173 [INFO] Step 2: birth date entered: 15.09.1964
+2026-06-29 11:47:51,585 [INFO] Step 3: clicked Фильтр
+2026-06-29 11:47:52,621 [INFO] Filter results loaded
+2026-06-29 11:47:52,704 [INFO] Step 4: using first eye link -> https://mis2.ssv.uz/orders/1671254
+2026-06-29 11:47:53,069 [INFO] Step 4: clicked eye -> https://mis2.ssv.uz/orders/1671254
+2026-06-29 11:47:55,611 [INFO] Steps 1-4 finished in 9.8s
+2026-06-29 11:47:56,128 [INFO] Step 5: ready on order page, waiting 123.87s until budget click at 11:50:00.000
+2026-06-29 11:50:00,357 [INFO] Step 5: clicked Запросить бюджет at 11:50:00.357
+2026-06-29 11:50:02,288 [INFO] Step 5: budget dialog confirmed (Закрыть)
+2026-06-29 11:50:04,299 [INFO] Done: САДРИДДИНОВА ГУЛШОД
+2026-06-29 11:50:04,299 [INFO] --- Processing БАКИРОВ ДУРСУН (DOB 12.07.1966) ---
+2026-06-29 11:50:04,299 [INFO] Target budget click: 11:50:03.000
+2026-06-29 11:50:04,505 [INFO] Step 1: opened Направления
+2026-06-29 11:50:06,954 [INFO] Cleared filters
+2026-06-29 11:50:09,309 [INFO] Step 2: birth date entered: 12.07.1966
+2026-06-29 11:50:09,712 [INFO] Step 3: clicked Фильтр
+2026-06-29 11:50:10,748 [INFO] Filter results loaded
+2026-06-29 11:50:10,831 [INFO] Step 4: using first eye link -> https://mis2.ssv.uz/orders/1699168
+2026-06-29 11:50:11,185 [INFO] Step 4: clicked eye -> https://mis2.ssv.uz/orders/1699168
+2026-06-29 11:50:13,723 [INFO] Steps 1-4 finished in 9.4s
+2026-06-29 11:50:13,723 [WARNING] Steps 1-4 took too long (+10.7s late) - clicking budget immediately
+2026-06-29 11:50:13,739 [INFO] Step 5: ready on order page, waiting 0.00s until budget click at 11:50:03.000
+2026-06-29 11:50:15,122 [INFO] Step 5: clicked Запросить бюджет at 11:50:15.122
+2026-06-29 11:50:24,338 [INFO] Step 5: no dialog (budget may already be requested)
+2026-06-29 11:50:24,338 [INFO] Done: БАКИРОВ ДУРСУН
+2026-06-29 11:50:24,338 [INFO] --- Processing ИБРАЙИМОВА ИХВОЛ (DOB 25.12.1952) ---
+2026-06-29 11:50:24,338 [INFO] Target budget click: 11:50:06.000
+2026-06-29 11:50:24,494 [INFO] Step 1: opened Направления
+2026-06-29 11:50:26,922 [INFO] Cleared filters
+2026-06-29 11:50:29,248 [INFO] Step 2: birth date entered: 25.12.1952
+2026-06-29 11:50:29,630 [INFO] Step 3: clicked Фильтр
+2026-06-29 11:50:30,650 [INFO] Filter results loaded
+2026-06-29 11:50:30,704 [INFO] Step 4: using first eye link -> https://mis2.ssv.uz/orders/1744592
+2026-06-29 11:50:31,064 [INFO] Step 4: clicked eye -> https://mis2.ssv.uz/orders/1744592
+2026-06-29 11:50:33,605 [INFO] Steps 1-4 finished in 9.3s
+2026-06-29 11:50:33,605 [WARNING] Steps 1-4 took too long (+27.6s late) - clicking budget immediately
+2026-06-29 11:50:34,121 [INFO] Step 5: ready on order page, waiting 0.00s until budget click at 11:50:06.000
+2026-06-29 11:50:35,487 [INFO] Step 5: clicked Запросить бюджет at 11:50:35.487
+2026-06-29 11:50:44,687 [INFO] Step 5: no dialog (budget may already be requested)
+2026-06-29 11:50:44,687 [INFO] Done: ИБРАЙИМОВА ИХВОЛ
+2026-06-29 11:50:44,687 [INFO] Job finished at 11:50:44.687 (duration 215.7s)
+2026-06-29 11:52:09,795 [INFO] Stopped by user.
